@@ -11,18 +11,21 @@ module.exports = function(grunt) {
 
     jade: {
       compile: {
+        options: {
+          pretty: true
+        },
         files: [
           {
             cwd: 'app/views',
             src: '**/*.jade',
-            dest: 'app/views',
+            dest: 'target/app/views',
             expand: true,
             ext: '.html'
           },
           {
             cwd: '',
             src: 'index.jade',
-            dest: '',
+            dest: 'target',
             expand: true,
             ext: '.html'
           }
@@ -33,25 +36,37 @@ module.exports = function(grunt) {
     concat: {
       styles: {
         src: 'app/views/**/*.scss',
-        dest: 'styles.scss'
+        dest: 'target/styles.scss'
+      },
+      js: {
+        src: 'app/**/*.js',
+        dest: 'target/app.js'
       }    
     },
 
     sass: {
       dist: {
         files: {
-          'styles.css': 'styles.scss'
+          'target/styles.css': 'target/styles.scss'
         }
       }
     },
 
     clean: {
-      compile: ['styles.css'],
+      compile: ['target/styles.scss'],
+      target: ['target']
     },
 
     compile: {
-      html: ['jade'],
-      styles: ['concat:styles', 'sass', 'clean:compile']
+      html: ['jade', 'wiredep'],
+      styles: ['concat:styles', 'sass', 'clean:compile'],
+      js: ['concat:js']
+    },
+
+    wiredep: {
+      task: {
+        src: ['target/**/*.html']
+      }
     }
 
   });
@@ -61,6 +76,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-clean');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-wiredep');
 
   grunt.registerTask('test', ['karma']);
   grunt.registerMultiTask('compile', function() {

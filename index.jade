@@ -2,14 +2,11 @@ html(ng-app="gruntExample")
 	head
 		title Grunt Example
 
-		link(rel="stylesheet", type="text/css", href="app/views/bar/bar.css")
-		link(rel="stylesheet", type="text/css", href="app/views/foo/foo.css")
+		link(rel="stylesheet", type="text/css", href="./styles.css")
 
-		script(src="bower_components/angular/angular.js")
-		script(src="bower_components/angular-route/angular-route.js")
+		// bower:js
+		// endbower
 
-		script(src="app/app.js")
-		script(src="app/views/bar/barCtrl.js")
-		script(src="app/views/foo/fooCtrl.js")
+		script(src="./app.js")
 
 	body(ng-view)
