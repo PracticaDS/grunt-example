@@ -57,17 +57,40 @@ module.exports = function(grunt) {
       target: ['target']
     },
 
+    copy: {
+      js: {
+        files: [
+          {expand: true, src: ['bower_components/**'], dest: 'target'}
+        ],
+      },
+    },
+
     compile: {
       html: ['jade', 'wiredep'],
       styles: ['concat:styles', 'sass', 'clean:compile'],
-      js: ['concat:js']
+      js: ['concat:js', 'copy:js']
     },
 
     wiredep: {
       task: {
         src: ['target/**/*.html']
       }
-    }
+    },
+
+    watch: {
+      js: {
+        files: ['**/*.js'],
+        tasks: ['compile:js']
+      },
+      html: {
+        files: ['**/*.jade'],
+        tasks: ['compile:html']
+      },
+      styles: {
+        files: ['**/*.sass'],
+        tasks: ['compile:styles']
+      }
+    },
 
   });
 
@@ -78,6 +101,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-wiredep');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('test', ['karma']);
   grunt.registerMultiTask('compile', function() {
