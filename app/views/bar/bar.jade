@@ -1,2 +1,9 @@
 .bar
-	h1 Esto es el Bar: {{barId}}
+    h1 Esto es un ejemplo de página
+
+    input#nuevo(type="text", ng-model="nuevaEntrada")
+
+    button#agregar(ng-click="agregarEntrada()") Agregar
+
+    ul.entradas(ng-repeat="entrada in entradas")
+        li.entrada {{entrada}}
