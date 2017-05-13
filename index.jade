@@ -9,4 +9,10 @@ html(ng-app="gruntExample")
 
 		script(src="./app.js")
 
-	body(ng-view)
+	body
+
+		a(href="#foo") Foo
+		&nbsp;
+		a(href="#/bar/12345") Bar
+
+		div(ng-view)
