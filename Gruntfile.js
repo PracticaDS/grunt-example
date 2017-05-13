@@ -3,6 +3,20 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
+    'http-server': {
+      dev: {
+        root: 'target',
+        port: 8000,
+        host: "0.0.0.0"
+      },
+      watch: {
+        root: 'target',
+        port: 8000,
+        host: "0.0.0.0",
+        runInBackground: true
+      }
+    },
+
     karma: {
       unit: {
         configFile: 'karma.config.js'
@@ -120,8 +134,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-wiredep');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-protractor-runner');
+  grunt.loadNpmTasks('grunt-http-server');
 
   grunt.registerTask('test', ['karma']);
+
+  grunt.registerTask('start', ['http-server:dev']);
+  
+  grunt.registerTask('start:watch', ['http-server:watch', 'watch']);
+
   grunt.registerMultiTask('compile', function() {
     grunt.task.run(this.data);
   });
